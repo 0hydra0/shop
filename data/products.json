@@ -1,0 +1,26 @@
+[
+  {
+    "id": 3,
+    "name": "Milk",
+    "quantity": 7,
+    "manufacture_date": "2025-07-25",
+    "expiry_date": "2025-07-26",
+    "added_date": "2025-07-25"
+  },
+  {
+    "id": 5,
+    "name": "Curd",
+    "quantity": 5,
+    "manufacture_date": "2025-07-25",
+    "expiry_date": "2025-08-02",
+    "added_date": "2025-07-25"
+  },
+  {
+    "id": 6,
+    "name": "Soap",
+    "quantity": 25,
+    "manufacture_date": "2025-07-25",
+    "expiry_date": "2026-04-24",
+    "added_date": "2025-07-25"
+  }
+]

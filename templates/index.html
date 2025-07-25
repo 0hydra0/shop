@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="{{ settings.theme }}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,76 +7,345 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
     <style>
-        .expired { background-color: #ff0000; }     /* Light red */
-        .urgent  { background-color: #b49c4d; }     /* Light yellow */
-        .soon    { background-color: #59a6b8; }     /* Light blue */
-        .normal  { background-color: #42a867; }     /* Default white */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
         
-        .table-responsive { max-height: 70vh; overflow-y: auto; }
-        .form-container { background: #f8f9fa; padding: 20px; border-radius: 5px; }
-        .last-updated { font-size: 0.9rem; color: #6c757d; }
+        [data-bs-theme="dark"] {
+            --primary-color: #5e72e4;
+            --secondary-color: #4a56d6;
+            --dark-color: #f8f9fa;
+            --light-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 1200px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .form-container {
+            background: var(--bs-body-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .table-responsive {
+            max-height: 65vh;
+            overflow-y: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .table {
+            margin-bottom: 0;
+            background-color: var(--bs-body-bg);
+        }
+        
+        .table thead {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-color) !important;
+            color: white;
+            z-index: 10;
+        }
+        
+        .table th {
+            font-weight: 500;
+        }
+        
+        .expired { background-color: rgba(247, 37, 133, 0.1); }
+        .urgent  { background-color: rgba(248, 150, 30, 0.1); }
+        .soon    { background-color: rgba(72, 149, 239, 0.1); }
+        .normal  { background-color: rgba(76, 201, 240, 0.1); }
+        
+        .badge {
+            font-weight: 500;
+            padding: 0.5em 0.75em;
+            border-radius: 20px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-danger {
+            transition: var(--transition);
+        }
+        
+        .btn-outline-danger:hover {
+            transform: translateY(-2px);
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .status-indicator.expired { background-color: var(--danger-color); }
+        .status-indicator.urgent { background-color: var(--warning-color); }
+        .status-indicator.soon { background-color: var(--info-color); }
+        .status-indicator.normal { background-color: var(--success-color); }
+        
+        .last-updated {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .stat-card {
+            background: var(--bs-body-bg);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .stat-card h5 {
+            color: var(--bs-secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            color: var(--dark-color);
+        }
+        
+        .stat-card i {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--bs-secondary-color);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--bs-border-color);
+        }
+        
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-body-tertiary">
     <div class="container py-4">
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="mb-0">Shop Inventory</h1>
-            <div class="last-updated">Last updated: {{ now }}</div>
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-1"><i class="fas fa-boxes me-2"></i>Shop Inventory</h1>
+                    <div class="last-updated"><i class="fas fa-sync-alt me-1"></i> Last updated: {{ now }}</div>
+                </div>
+                <div class="text-end">
+                    <div class="badge bg-light text-dark fs-6">
+                        <i class="fas fa-box-open me-1"></i> {{ total_products }} products
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form method="GET" action="/" class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" name="search" class="form-control" placeholder="Search products..." 
+                               value="{{ search_query }}">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                        {% if search_query %}
+                        <a href="/" class="btn btn-outline-secondary">Clear</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h5>Expired</h5>
+                    <p>{{ products|selectattr('urgency', 'equalto', 'expired')|list|length }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h5>Urgent</h5>
+                    <p>{{ products|selectattr('urgency', 'equalto', 'urgent')|list|length }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-calendar-week"></i>
+                    <h5>Expiring Soon</h5>
+                    <p>{{ products|selectattr('urgency', 'equalto', 'soon')|list|length }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h5>Normal</h5>
+                    <p>{{ products|selectattr('urgency', 'equalto', 'normal')|list|length }}</p>
+                </div>
+            </div>
         </div>
 
         <!-- Add Product Form -->
-        <div class="form-container mb-4">
-            <h3>Add New Product</h3>
+        <div class="form-container">
+            <h3 class="mb-4"><i class="fas fa-plus-circle me-2"></i>Add New Product</h3>
             <form method="POST" action="/add" class="row g-3">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label">Product Name</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" placeholder="Enter product name" required>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Quantity</label>
-                    <input type="number" name="quantity" class="form-control" min="1" required>
+                    <input type="number" name="quantity" class="form-control" min="1" value="1" required>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label">Manufacture Date</label>
+                    <label class="form-label">Current Date</label>
                     <input type="date" name="manufacture_date" class="form-control" required>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Expiry Date</label>
                     <input type="date" name="expiry_date" class="form-control" required>
                 </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-100">Add Product</button>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-plus me-1"></i> Add
+                    </button>
                 </div>
             </form>
         </div>
 
         <!-- Products Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-hover align-middle">
                 <thead class="table-dark">
                     <tr>
                         <th>Product</th>
-                        <th>Qty</th>
-                        <th>Manufactured</th>
+                        <th class="text-center">Qty</th>
+                        <th>Current Date</th>
                         <th>Expiry</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if not products %}
                         <tr>
-                            <td colspan="6" class="text-center">No products added yet</td>
+                            <td colspan="6" class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h4>No products found</h4>
+                                <p class="text-muted">{% if search_query %}Try a different search term{% else %}Add your first product using the form above{% endif %}</p>
+                            </td>
                         </tr>
                     {% else %}
                         {% for product in products %}
                         <tr class="{{ product['urgency'] }}">
-                            <td>{{ product['name'] }}</td>
-                            <td>{{ product['quantity'] }}</td>
+                            <td>
+                                <span class="status-indicator {{ product['urgency'] }}"></span>
+                                {{ product['name'] }}
+                            </td>
+                            <td class="text-center">
+                                <form method="POST" action="/update_quantity/{{ product['id'] }}" class="d-inline">
+                                    <input type="number" name="quantity" value="{{ product['quantity'] }}" 
+                                           min="0" class="form-control form-control-sm quantity-input">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-save"></i>
+                                    </button>
+                                </form>
+                            </td>
                             <td>{{ product['manufacture_formatted'] }}</td>
                             <td>{{ product['expiry_formatted'] }}</td>
                             <td>
@@ -91,7 +360,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="/delete/{{ product['id'] }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                <a href="/delete/{{ product['id'] }}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -99,6 +370,21 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <form method="POST" action="/change_theme">
+            {% if settings.theme == 'light' %}
+            <button type="submit" name="theme" value="dark" class="theme-btn bg-dark text-white" title="Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            {% else %}
+            <button type="submit" name="theme" value="light" class="theme-btn bg-light text-dark" title="Light Mode">
+                <i class="fas fa-sun"></i>
+            </button>
+            {% endif %}
+        </form>
     </div>
 
     <!-- Bootstrap JS Bundle -->
@@ -117,6 +403,23 @@
         setTimeout(() => {
             window.location.reload();
         }, 60000);
+        
+        // Add animation to table rows
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                }, index * 50);
+            });
+            
+            // Focus search field if it has value
+            const searchInput = document.querySelector('input[name="search"]');
+            if (searchInput && searchInput.value) {
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
     </script>
 </body>
 </html>
