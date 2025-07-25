@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Shop Inventory</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <style>
-        .expired { background-color: #ffdddd; }
-        .urgent { background-color: #fff3cd; }
-        .soon { background-color: #ffe8cc; }
-        .normal { background-color: #ffffff; }
+        .expired { background-color: #ff0000; }     /* Light red */
+        .urgent  { background-color: #b49c4d; }     /* Light yellow */
+        .soon    { background-color: #59a6b8; }     /* Light blue */
+        .normal  { background-color: #42a867; }     /* Default white */
+        
         .table-responsive { max-height: 70vh; overflow-y: auto; }
         .form-container { background: #f8f9fa; padding: 20px; border-radius: 5px; }
         .last-updated { font-size: 0.9rem; color: #6c757d; }
@@ -17,11 +22,12 @@
 </head>
 <body class="bg-light">
     <div class="container py-4">
+        <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1 class="mb-0">Shop Inventory</h1>
             <div class="last-updated">Last updated: {{ now }}</div>
         </div>
-        
+
         <!-- Add Product Form -->
         <div class="form-container mb-4">
             <h3>Add New Product</h3>
@@ -43,7 +49,7 @@
                     <input type="date" name="expiry_date" class="form-control" required>
                 </div>
                 <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <button type="submit" class="btn btn-primary w-100">Add Product</button>
                 </div>
             </form>
         </div>
@@ -79,7 +85,7 @@
                                 {% elif product['urgency'] == 'urgent' %}
                                     <span class="badge bg-warning text-dark">{{ product['status_text'] }}</span>
                                 {% elif product['urgency'] == 'soon' %}
-                                    <span class="badge bg-orange">{{ product['status_text'] }}</span>
+                                    <span class="badge bg-info text-dark">{{ product['status_text'] }}</span>
                                 {% else %}
                                     <span class="badge bg-success">{{ product['status_text'] }}</span>
                                 {% endif %}
@@ -95,7 +101,10 @@
         </div>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Auto-fill & Refresh Logic -->
     <script>
         // Set default dates
         document.querySelector('input[name="manufacture_date"]').valueAsDate = new Date();
@@ -104,8 +113,8 @@
         expiryDate.setDate(expiryDate.getDate() + 30);
         document.querySelector('input[name="expiry_date"]').valueAsDate = expiryDate;
 
-        // Auto-refresh every minute (60000 milliseconds)
-        setTimeout(function(){
+        // Auto-refresh every minute (60,000 ms)
+        setTimeout(() => {
             window.location.reload();
         }, 60000);
     </script>
